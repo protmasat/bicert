@@ -32,7 +32,7 @@ npm i express dotenv mongoose
 touch server.js
 
 # setup project structure
-mkdir config middleware routes models utils services
+mkdir config middleware routes models utils services controllers
 
 # cd into config then create file
 
@@ -99,16 +99,24 @@ const ConnectDB = async () => {
 };
 
 module.exports = ConnectDB;
-EOF
-
-: '
-comment will be here
-steps
-1. get into the folder
-2. ask user for the name of backend folder, frontend folder and docs folder
-3. get into logic folder npm init, then installa packages
-4. create server.js: add source into it minimal
-5. setup project structure
-'
+EOF'
 
 # setup into DB.js
+
+# get into middleware folder and create error handler
+
+touch errorHandler.js
+cat << EOF >> errorHandler.js 
+
+const errorHandler = (err, req, res, next) => {
+  console.error(err);
+
+  res.status(500).json({
+    sucess: false,
+    message: "Internal server error",
+  });
+};
+module.exports = errorHandler;
+
+EOF'
+

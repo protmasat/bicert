@@ -5,11 +5,21 @@ birth date, registrationDate, registrarGeneral
  */
 
 const mongoose = require("mongoose");
+
+const today = new Date();
+
+const day = today.getDate();
+const month = today.getMonth() + 1;
+const year = today.getFullYear();
+
+const now = `BCERTZ-${day}/${month}/${year}-${Math.floor(Math.random() * 1000)}`;
+
 const certSchema = new mongoose.Schema(
   {
     IdNumber: {
       type: Number,
-      default: "TZ" + Date.now + Math.floor(Math.random * 1000),
+      default: now,
+      unqiue: true,
     },
     placeBorn: {
       type: String,
@@ -46,6 +56,7 @@ const certSchema = new mongoose.Schema(
     },
     registrationDate: {
       type: Date,
+      default: Date.now,
       required: [true, "registration date is required"],
     },
     registrarGeneral: {
@@ -59,5 +70,5 @@ const certSchema = new mongoose.Schema(
   },
 );
 
-const Certficate = mongoose.model("certificates", certSchema);
+const Certficate = mongoose.model("certificate", certSchema);
 module.exports = Certficate;
