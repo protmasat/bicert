@@ -49,6 +49,7 @@ const certSchema = new mongoose.Schema(
     motherPoB: {
       type: String,
       required: [true, "mother's place of birth is required"],
+      default: Date.now,
     },
     birthDate: {
       type: String,

@@ -1,15 +1,24 @@
 const express = require("express");
-const { CreateCertficate } = require("../controllers/Certificate");
-const cerTrouter = express.Router();
+const {
+  CreateCertficate,
+  GetCertificates,
+  GetCertificate,
+  UpdateCertificate,
+} = require("../controllers/Certificate");
+const certRouter = express.Router();
 
 // create certificate
-cerTrouter.post("/", CreateCertficate);
+certRouter.post("/", CreateCertficate);
 
 // read certificates
+certRouter.get("/", GetCertificates);
 
 // read certficate
+certRouter.get("/:id", GetCertificate);
 
 // update certificate
+certRouter.put("/:id", UpdateCertificate);
 
 // archive certificate
-module.exports = cerTrouter;
+
+module.exports = certRouter;

@@ -15,6 +15,6 @@ messagesRouter.get("/", GetMessages);
 
 messagesRouter.get("/:id", GetMessage);
 
-messagesRouter.put("/:id", UpdateMessageStatus);
+messagesRouter.put("/:id", RequireBody, UpdateMessageStatus);
 
 module.exports = messagesRouter;
