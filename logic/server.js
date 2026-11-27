@@ -24,7 +24,6 @@ app.get("/", (req, res) => {
 
 app.use("/api/v1/messages", messagesRouter);
 app.use("/api/v1/auth", userRouter);
-
 app.use("/api/v1/certificates", certRouter);
 app.use("/api/v1/admin", adminRoutes);
 

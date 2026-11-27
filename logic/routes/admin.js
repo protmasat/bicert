@@ -4,7 +4,6 @@ const requireAuth = require("../middleware/Auth");
 const requireRole = require("../middleware/RequireRole");
 const adminRoutes = express.Router();
 
-// register
 adminRoutes.post(
   "/register",
   requireAuth,

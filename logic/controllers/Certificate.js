@@ -2,7 +2,6 @@ const Certficate = require("../models/certificate");
 
 const CreateCertficate = async (req, res, next) => {
   const {
-    IdNumber,
     placeBorn,
     name,
     sex,
@@ -14,8 +13,8 @@ const CreateCertficate = async (req, res, next) => {
     registrarGeneral,
   } = req.body;
 
+  // Validate required fields
   if (
-    !IdNumber ||
     !placeBorn ||
     !name ||
     !sex ||
@@ -27,13 +26,13 @@ const CreateCertficate = async (req, res, next) => {
     !registrarGeneral
   ) {
     return res.status(400).json({
-      sucess: false,
+      success: false,
       message: "All fields are required!",
     });
   }
 
+  // Create certificate
   const newCert = await Certficate.create({
-    IdNumber,
     placeBorn,
     name,
     sex,
@@ -45,16 +44,9 @@ const CreateCertficate = async (req, res, next) => {
     registrarGeneral,
   });
 
-  if (!newCert) {
-    return res.status(400).json({
-      sucess: false,
-      message: "Certificate not found",
-    });
-  }
-
-  res.status(201).json({
-    sucess: true,
-    message: "Certificate generated",
+  return res.status(201).json({
+    success: true,
+    message: "Certificate created successfully",
     data: newCert,
   });
 };
