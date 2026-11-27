@@ -1,15 +1,29 @@
 const express = require("express");
-const { CreateCertficate } = require("../controllers/Certificate");
-const cerTrouter = express.Router();
+const {
+  CreateCertficate,
+  GetCertificates,
+  GetCertificate,
+  UpdateCertificate,
+} = require("../controllers/Certificate");
+const RequireBody = require("../middleware/RequireBod");
 
-// create certificate
-cerTrouter.post("/", CreateCertficate);
+const requireAuth = require("../middleware/Auth");
+const requireRole = require("../middleware/RequireRole");
 
-// read certificates
+const certRouter = express.Router();
 
-// read certficate
+certRouter.post(
+  "/",
+  requireAuth,
+  requireRole(["admin"]),
+  RequireBody,
+  CreateCertficate,
+);
 
-// update certificate
+certRouter.get("/", requireAuth, requireRole(["admin"]), GetCertificates);
 
-// archive certificate
-module.exports = cerTrouter;
+certRouter.get("/:id", requireAuth, requireRole(["admin"]), GetCertificate);
+
+certRouter.put("/:id", requireAuth, requireRole(["admin"]), UpdateCertificate);
+
+module.exports = certRouter;

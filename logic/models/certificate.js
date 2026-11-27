@@ -1,68 +1,72 @@
-/**
- ID, Place born, name, sex, father's name, fathers country place of birth, 
-mother's name, mother's name place of birth,
-birth date, registrationDate, registrarGeneral
- */
-
 const mongoose = require("mongoose");
+const crypto = require("crypto");
 
-const today = new Date();
-
-const day = today.getDate();
-const month = today.getMonth() + 1;
-const year = today.getFullYear();
-
-const now = `BCERTZ-${day}/${month}/${year}-${Math.floor(Math.random() * 1000)}`;
-
-const certSchema = new mongoose.Schema(
+const certificateSchema = new mongoose.Schema(
   {
     IdNumber: {
-      type: Number,
-      default: now,
-      unqiue: true,
+      type: String,
+      unique: true,
+      immutable: true,
+      default: () => `BCERTZ-${crypto.randomUUID()}`,
     },
+
     placeBorn: {
       type: String,
-      required: [true, "place of birth is required"],
+      required: [true, "Place of birth is required"],
+      trim: true,
     },
+
     name: {
       type: String,
-      required: [true, "first name is required"],
+      required: [true, "Full name is required"],
+      trim: true,
     },
+
     sex: {
       type: String,
       enum: ["male", "female"],
-      required: [true, "sex is required"],
+      required: [true, "Sex is required"],
     },
+
     fathername: {
       type: String,
-      required: [true, "father's name is required"],
+      required: [true, "Father's name is required"],
+      trim: true,
     },
+
     fatherPoB: {
       type: String,
-      required: [true, "father's place of birth is required"],
+      required: [true, "Father's place of birth is required"],
+      trim: true,
     },
+
     mothername: {
       type: String,
-      required: [true, "mother's name is required"],
+      required: [true, "Mother's name is required"],
+      trim: true,
     },
+
     motherPoB: {
       type: String,
-      required: [true, "mother's place of birth is required"],
+      required: [true, "Mother's place of birth is required"],
+      trim: true,
     },
+
     birthDate: {
-      type: String,
-      required: [true, "birth date is required"],
+      type: Date,
+      required: [true, "Birth date is required"],
     },
+
     registrationDate: {
       type: Date,
+      required: [true, "Registration date is required"],
       default: Date.now,
-      required: [true, "registration date is required"],
     },
+
     registrarGeneral: {
       type: String,
       enum: ["director", "general", "minister"],
-      required: [true, "registration date is required"],
+      required: [true, "Registrar General is required"],
     },
   },
   {
@@ -70,5 +74,6 @@ const certSchema = new mongoose.Schema(
   },
 );
 
-const Certficate = mongoose.model("certificate", certSchema);
-module.exports = Certficate;
+const Certificate = mongoose.model("Certificate", certificateSchema);
+
+module.exports = Certificate;
